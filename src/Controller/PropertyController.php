@@ -32,7 +32,6 @@ class PropertyController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($property);
         $em->flush();
-        //dsdfsdfsdfsd
 
         return $this->render('property/index.html.twig', [
             'current_menu' => 'properties'
