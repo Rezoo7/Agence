@@ -12,9 +12,8 @@ class PropertyController extends AbstractController
 {
     /**
      * @Route("/biens", name="property.index")
-     * @return Response
      */
-    public function index() : Response
+    public function index()
     {
         $property = new Property();
         $property->setTitle("Mon premier bien ")
@@ -27,14 +26,17 @@ class PropertyController extends AbstractController
                 ->setHeat(1)
                 ->setCity('Montpellier')
                 ->setAddress('15 Boulevard Gambetta')
-                ->setPostalCode('34000');
+                ->setPostalCode('34000')
+                ->setCreatedAt(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($property);
         $em->flush();
 
         return $this->render('property/index.html.twig', [
-            'current_menu' => 'properties'
+            'current_menu' => 'properties',
+            'adresse'  => $property->getAddress()
+
         ]);
     }
 }
