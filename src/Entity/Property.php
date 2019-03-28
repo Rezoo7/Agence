@@ -86,7 +86,7 @@ class Property
      */
     private $created_at;
 
-    public function _construct(){
+    public function __construct(){
         $this->created_at = new \DateTime();
     }
 
