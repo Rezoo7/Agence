@@ -21,10 +21,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <a href="#">{{ property.title }}</a>
+                                    <a href="{{ path('property.show',{id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
                                 </h5>
                                 <p class="card-text">{{ property.city }} - ({{ property.postalCode }})</p>
-                                <div class="text-primary"> {{ property.price }}</div>
+                                <div class="text-primary" style="font-weight: bold;font-size: 2rem;"> {{ property.formattedPrice}}€</div>
+                                <!-- number_format => 0 chiffres apres la virgule , ' ' séparation décimales, ' ' séparatoion des milliers  -->
                             </div>
                         </div>
                     </div>
