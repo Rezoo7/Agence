@@ -19,18 +19,23 @@
             <tr>
                 <td> {{ property.title }}</td>
                 <td>
-                    <a href="{{ path('admin.property.edit', {id: property.id}) }}" class="btn btn-secondary"> Editer </a>
+                    <a href="{{ path('admin.property.edit', {id: property.id}) }}" class="btn btn-danger"> Editer </a>
                 </td>
             </tr>
+            {% endfor %}
             </tbody>
         </table>
+
+        <div class="text-right">
+            <a href="{{ path('admin.property.new') }}" class="btn btn-outline-primary"> Créer un Nouveau Bien</a>
+        </div>
     </div>
 
 
 
 
 
-            {% endfor %}
+
 
     </body>
 {% endblock %}
