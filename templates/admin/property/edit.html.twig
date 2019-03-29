@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title  "Editer" %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <h2> Editer le Bien </h2>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
