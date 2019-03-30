@@ -13,6 +13,7 @@ use App\Form\PropertyType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\PropertyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,6 +62,7 @@ class AdminPropertyController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $this->em->persist($property);
             $this->em->flush();
+            $this->addFlash('success','Bien Créer avec succès');
             return $this->redirectToRoute('admin.property.index');
         }
 
@@ -73,7 +75,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/{id}",name="admin.property.edit")
+     * @Route("/admin/property/{id}",name="admin.property.edit",methods="GET|POST")
      * @param Property $property
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -85,6 +87,7 @@ class AdminPropertyController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
+            $this->addFlash('success','Bien Modifié avec succès');
             return $this->redirectToRoute('admin.property.index');
         }
 
@@ -93,6 +96,24 @@ class AdminPropertyController extends AbstractController
             'form' => $form->createView()
 
         ]);
+    }
+
+    /**
+     * @Route("/admin/property/{id}", name="admin.property.delete", methods="DELETE")
+     * @param Property $property
+     * @param Request $request
+     * @return Response
+     */
+    public function delete(Property $property,Request $request){
+
+        if($this->isCsrfTokenValid('delete'.$property->getId(), $request->get('_token'))){
+            $this->em->remove($property);
+            $this->em->flush();
+            $this->addFlash('success','Bien Supprimé avec succès');
+        }
+
+        return $this->redirectToRoute('admin.property.index');
+
     }
 }
 
