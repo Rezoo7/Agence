@@ -115,6 +115,14 @@ class AdminPropertyController extends AbstractController
         return $this->redirectToRoute('admin.property.index');
 
     }
+
+    /**
+     * @Route("/logout", name="admin.property.logout",methods={"GET"})
+     */
+    public function logout(){
+
+        return $this->redirectToRoute('home');
+    }
 }
 
 
