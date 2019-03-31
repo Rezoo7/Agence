@@ -4,9 +4,16 @@
 
 {% block body %}
     <body>
-    <div class="container">
-        <h1>Tous nos Biens </h1>
+    <div class="container mt-4">
+        <h1>Tous Nos Biens </h1>
 
+        <div class="row">
+            {% for property in properties %}
+                <div class="col-md-4">
+                    {% include 'property/_property.html.twig' %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
     </body>
 {% endblock %}
