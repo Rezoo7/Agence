@@ -117,11 +117,11 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="admin.property.logout",methods={"GET"})
+     * @Route("/logout", name="logout",methods={"GET"})
      */
     public function logout(){
 
-        return $this->redirectToRoute('home');
+        return $this->render('home/index.html.twig');
     }
 }
 

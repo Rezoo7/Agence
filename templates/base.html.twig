@@ -23,7 +23,17 @@
                     </ul>
                 </div>
 
+                {% if app.user == false %}
                 <a href="{{ path('login') }}"> <button class="btn btn-light btn-lg my-2 my-sm-0">Connexion</button></a>
+                {% endif %}
+
+                {% if app.user %}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                         <a href="{{ path('logout') }}"> <button class="btn btn-light btn-lg ml-2">Déconnexion</button></a>
+                    </li>
+                </ul>
+                {% endif %}
             </nav>
         </header>
         {% block body %}{% endblock %}
