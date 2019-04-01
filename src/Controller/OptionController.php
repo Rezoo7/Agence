@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Option;
-use App\Form\OptionType;
+use App\Form\Option1Type;
 use App\Repository\OptionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,13 +29,11 @@ class OptionController extends AbstractController
 
     /**
      * @Route("/new", name="option_new", methods={"GET","POST"})
-     * @param Request $request
-     * @return Response
      */
     public function new(Request $request): Response
     {
         $option = new Option();
-        $form = $this->createForm(OptionType::class, $option);
+        $form = $this->createForm(Option1Type::class, $option);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -67,7 +65,7 @@ class OptionController extends AbstractController
      */
     public function edit(Request $request, Option $option): Response
     {
-        $form = $this->createForm(OptionType::class, $option);
+        $form = $this->createForm(Option1Type::class, $option);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

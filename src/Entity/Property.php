@@ -106,7 +106,6 @@ class Property
         $this->options = new ArrayCollection();
     }
 
-//sdfdsfsd
     public function getId(): ?int
     {
         return $this->id;
