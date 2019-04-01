@@ -21,7 +21,7 @@ class PropertyFixtures extends Fixture
             $postal_code = $faker->postcode;
 
             $property
-                ->setTitle($ville . " - (" .$postal_code.") ". $rue)
+                ->setTitle($ville . "  (" .$postal_code.")")
                 ->setDescription($faker->sentences(3,true))
                 ->setSurface($faker->numberBetween(20,350))
                 ->setRooms($faker->numberBetween(2,10))
