@@ -18,7 +18,7 @@ class PropertySearchType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' =>'Prix Minimal'
+                    'placeholder' =>'Prix Maximal'
                 ]
             ])
             ->add('minSurface',IntegerType::class,[
