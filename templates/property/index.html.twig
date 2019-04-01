@@ -8,7 +8,7 @@
     <div class="jumbotron">
         <div class="container">
             {{ form_start(form) }}
-            <div class="form-row">
+            <div class="form-row align-items-end">
                 <div class="col">
                     {{ form_row(form.minSurface) }}
                 </div>
@@ -16,8 +16,10 @@
                     {{ form_row(form.maxPrice) }}
                 </div>
                 <div class="col">
-                    <button class="btn btn-primary"> Rechercher </button>
-                    <button class="btn btn-secondary"> Vider </button> <!-- Ne fonctionne pas -->
+                   <div class="form-group">
+                       <button class="btn btn-primary"> Rechercher </button>
+                       <button class="btn btn-secondary"> Vider </button> <!-- Ne fonctionne pas -->
+                   </div>
 
                 </div>
             </div>
