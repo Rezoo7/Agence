@@ -9,6 +9,15 @@
         <p class="card-text"> {{ property.address }}</p>
         <p class="card-text"> {{ property.description | nl2br }}</p>
 
+
+       <!-- <p class="card-text">
+         {#  {% for opt in options %}
+            {{ property.options }}
+            {% endfor %}
+            #}
+        </p>
+        -->
+
         <div class="text-primary" style="font-size: 2rem; font-weight: bold">
             {{ property.formattedPrice }} €
         </div>

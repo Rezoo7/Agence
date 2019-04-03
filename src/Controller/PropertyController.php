@@ -7,6 +7,7 @@ use App\Entity\Property;
 use App\Entity\PropertySearch;
 use App\Form\PropertySearchType;
 use App\Repository\PropertyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Knp\Component\Pager\PaginatorInterface;
@@ -41,12 +42,14 @@ class PropertyController extends AbstractController
         $form = $this->createForm(PropertySearchType::class,$search);
         $form->handleRequest($request);
 
-        //Gérer le traitement
+
 
        $properties = $paginator->paginate(
            $this->repository->findAllVisibleQuery($search),
            $request->query->getInt('page', 1),
             12);
+
+
 
         return $this->render('property/index.html.twig', [
             'current_menu' => 'properties',
