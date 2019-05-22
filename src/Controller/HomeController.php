@@ -9,6 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+
+
+
     /**
      * @Route("/", name="home")
      * @param PropertyRepository $repository
@@ -24,4 +27,12 @@ class HomeController extends AbstractController
 
         ]);
     }
+
+    public function graph(PropertyRepository $repository){
+
+        $properties = $repository->findSoldProperties();
+
+
+    }
+
 }

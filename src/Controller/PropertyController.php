@@ -77,4 +77,11 @@ class PropertyController extends AbstractController
             'current_menu' => 'properties'
         ]);
     }
+
+    /**
+     * @route("/graphs", name="graphs")
+     */
+    public function graph(){
+
+    }
 }
