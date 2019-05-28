@@ -65,14 +65,26 @@ class PropertyRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * Renvoie tous les enregistrements visibles
-     *Mettre les methodes privées à la fin puisqu'on les regardent jamais
-     */
-    public function findSoldProperties(): QueryBuilder{
-        return $this->createQueryBuilder('p')
-            ->where('p.sold = true');
+    public function findAllQuery(){
+        return $this->findVisibleQuery()
+            ->getQuery()
+            ->getResult();
     }
+
+    public function findSoldProperties(){
+        return $this->findVisibleQuery()
+            ->where('p.sold = true')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findNotSoldProperties(){
+        return $this->findVisibleQuery()
+            ->where('p.sold = false')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     /**
      * Renvoie tous les enregistrements visibles

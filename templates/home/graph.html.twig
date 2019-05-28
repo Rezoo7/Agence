@@ -1,0 +1,609 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Chiffres {% endblock %}
+
+{% block body %}
+    <br>
+    <!-- titre map : <div id="title" class="text-lg-center"> </div>
+    -->
+    <div class="jumbotron text-center" style="height: 50px;padding-top:0;">
+        <h2 class="text-lg-center" style="height: 20px;"> Biens en vente en France</h2>
+    </div>
+    <div class="ml-2" id="chartdiv" style="width: 100%;height: 300px;margin-left: 0px;" ></div>
+    <br><br><br>
+    <div class="jumbotron text-center" style="height: 50px;padding-top:0;">
+        <h2 class="text-lg-center"> Nombre de Pièces </h2>
+    </div>
+    <div class="ml-2" id="chartdiv2" style="width:100%;height: 450px;background-color: #30303d; color: #fff;"></div>
+    <br><br><br>
+    <div class="jumbotron text-center" style="height: 50px;padding-top:0;">
+        <h2 class="text-lg-center"> Nombre de Chambres </h2>
+    </div>
+    <div class="ml-2" id="chartdiv3" style="width:100%;height: 450px;"></div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('build/app.js') }}"></script>
+
+    <script>
+
+        am4core.ready(function() {
+
+// Themes begin
+            am4core.useTheme(am4themes_animated);
+// Themes end
+
+            window.onload = function() {
+
+                /**
+                 * This demo uses our own method of determining user's location
+                 * It is not public web service that you can use
+                 * You'll need to find your own. We recommend http://www.maxmind.com
+                 */
+
+
+                var defaultMap = "franceLow";
+
+                // calculate which map to be used
+                var currentMap = defaultMap;
+                var title = "France";
+
+                // Create map instance
+                var chart = am4core.create("chartdiv", am4maps.MapChart);
+
+                //let titre = document.getElementById('title');
+                //titre.innerText= title;
+
+                // Set map definition
+                chart.geodataSource.url = "https://www.amcharts.com/lib/4/geodata/json/" + currentMap + ".json";
+                chart.geodataSource.events.on("parseended", function(ev) {
+                    let bre_value = 0;
+                    let nor_value = 0;
+                    let hdf_value = 0;
+                    let ges_value = 0;
+                    let idf_value = 0;
+                    let pdl_value = 0;
+                    let cvl_value = 0;
+                    let bfc_value = 0;
+                    let na_value = 0;
+                    let ara_value = 0;
+                    let occ_value = 0;
+                    let paca_value = 0;
+                    let cor_value = 0;
+
+                    var data = [];
+
+                    {% for property in properties_notSold %}
+                        {% if (property.postalCode starts with '35') or (property.postalCode starts with '29') or (property.postalCode starts with '22') or (property.postalCode starts with '56') %}
+                            bre_value++;
+
+                        {% elseif (property.postalCode starts with '53') or (property.postalCode starts with '72') or (property.postalCode starts with '49') or (property.postalCode starts with '44') or (property.postalCode starts with '85') %}
+                            pdl_value++;
+
+                        {% elseif (property.postalCode starts with '50') or (property.postalCode starts with '14') or (property.postalCode starts with '76') or (property.postalCode starts with '27') or (property.postalCode starts with '61') %}
+                            nor_value++;
+
+                        {% elseif (property.postalCode starts with '62') or (property.postalCode starts with '59') or (property.postalCode starts with '80') or (property.postalCode starts with '02') or (property.postalCode starts with '60') %}
+                            hdf_value++;
+
+                        {% elseif (property.postalCode starts with '08') or (property.postalCode starts with '51') or (property.postalCode starts with '10') or (property.postalCode starts with '55') or (property.postalCode starts with '52')
+                             or (property.postalCode starts with '57') or (property.postalCode starts with '55') or (property.postalCode starts with '88') or (property.postalCode starts with '67') or (property.postalCode starts with '68') %}
+                            ges_value++;
+
+                        {% elseif (property.postalCode starts with '95') or (property.postalCode starts with '92') or (property.postalCode starts with '93') or (property.postalCode starts with '94') or (property.postalCode starts with '78') or (property.postalCode starts with '91') or (property.postalCode starts with '77') or (property.postalCode starts with '75') %}
+                            idf_value++;
+
+                        {% elseif (property.postalCode starts with '28') or (property.postalCode starts with '45') or (property.postalCode starts with '41') or (property.postalCode starts with '37') or (property.postalCode starts with '36') or (property.postalCode starts with '18') %}
+                            cvl_value++;
+
+                        {% elseif (property.postalCode starts with '89') or (property.postalCode starts with '58') or (property.postalCode starts with '21') or (property.postalCode starts with '71') or (property.postalCode starts with '70') or (property.postalCode starts with '39')
+                            or (property.postalCode starts with '90') or (property.postalCode starts with '25') %}
+                            bfc_value++;
+
+                        {% elseif (property.postalCode starts with '79') or (property.postalCode starts with '86') or (property.postalCode starts with '17') or (property.postalCode starts with '16') or (property.postalCode starts with '87')
+                            or (property.postalCode starts with '23') or (property.postalCode starts with '33') or (property.postalCode starts with '24') or (property.postalCode starts with '19') or (property.postalCode starts with '33')
+                            or (property.postalCode starts with '40') or (property.postalCode starts with '47') or (property.postalCode starts with '64') %}
+                            na_value++;
+
+                        {% elseif (property.postalCode starts with '03') or (property.postalCode starts with '63') or (property.postalCode starts with '15') or (property.postalCode starts with '42') or (property.postalCode starts with '43')
+                            or (property.postalCode starts with '69') or (property.postalCode starts with '07') or (property.postalCode starts with '01') or (property.postalCode starts with '38') or (property.postalCode starts with '26')
+                            or (property.postalCode starts with '74') or (property.postalCode starts with '73') %}
+                            ara_value++;
+
+                        {% elseif (property.postalCode starts with '32') or (property.postalCode starts with '65') or (property.postalCode starts with '46') or (property.postalCode starts with '82') or (property.postalCode starts with '31')
+                            or (property.postalCode starts with '09') or (property.postalCode starts with '12') or (property.postalCode starts with '81') or (property.postalCode starts with '11') or (property.postalCode starts with '66')
+                            or (property.postalCode starts with '48') or (property.postalCode starts with '30') %}
+                            occ_value++;
+
+                        {% elseif (property.postalCode starts with '84') or (property.postalCode starts with '13') or (property.postalCode starts with '05') or (property.postalCode starts with '04') or (property.postalCode starts with '83')
+                            or (property.postalCode starts with '06') %}
+                            paca_value++;
+
+                        {% elseif (property.postalCode starts with '20B') or (property.postalCode starts with '20A') %}
+                            cor_value++;
+                    {% endif %}
+                    {% endfor %}
+
+                    data.push({id: 'FR-BRE',value: bre_value});
+                    data.push({id: 'FR-NOR',value: nor_value});
+                    data.push({id: 'FR-HDF',value: hdf_value});
+                    data.push({id: 'FR-GES',value: ges_value});
+                    data.push({id: 'FR-IDF',value: idf_value});
+                    data.push({id: 'FR-PDL',value: pdl_value});
+                    data.push({id: 'FR-CVL',value: cvl_value});
+                    data.push({id: 'FR-BFC',value: bfc_value});
+                    data.push({id: 'FR-NAQ',value: na_value});
+                    data.push({id: 'FR-ARA',value: ara_value});
+                    data.push({id: 'FR-OCC',value: occ_value});
+                    data.push({id: 'FR-PAC',value: paca_value});
+                    data.push({id: 'FR-COR',value: cor_value});
+
+
+                    polygonSeries.data = data;
+                });
+
+                // Set projection
+                chart.projection = new am4maps.projections.Mercator();
+
+                // Create map polygon series
+                var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+
+                //Set min/max fill color for each area
+                polygonSeries.heatRules.push({
+                    property: "fill",
+                    target: polygonSeries.mapPolygons.template,
+                    min: chart.colors.getIndex(1).brighten(1),
+                    max: chart.colors.getIndex(1).brighten(-0.3)
+                });
+
+                // Make map load polygon data (state shapes and names) from GeoJSON
+                polygonSeries.useGeodata = true;
+
+                // Set up heat legend
+                let heatLegend = chart.createChild(am4maps.HeatLegend);
+                heatLegend.series = polygonSeries;
+                heatLegend.align = "right";
+                heatLegend.width = am4core.percent(25);
+                heatLegend.marginRight = am4core.percent(4);
+                heatLegend.minValue = 0;
+                heatLegend.maxValue = 40000000;
+                heatLegend.valign = "bottom";
+
+                // Set up custom heat map legend labels using axis ranges
+                var minRange = heatLegend.valueAxis.axisRanges.create();
+                minRange.value = heatLegend.minValue;
+                minRange.label.text = "Peu ";
+                var maxRange = heatLegend.valueAxis.axisRanges.create();
+                maxRange.value = heatLegend.maxValue;
+                maxRange.label.text = "Beaucoup !";
+
+                // Blank out internal heat legend value axis labels
+                heatLegend.valueAxis.renderer.labels.template.adapter.add("text", function(labelText) {
+                    return "";
+                });
+
+                // Configure series tooltip
+                var polygonTemplate = polygonSeries.mapPolygons.template;
+                polygonTemplate.tooltipText = "{name}: {value}";
+                polygonTemplate.nonScalingStroke = true;
+                polygonTemplate.strokeWidth = 0.5;
+
+                // Create hover state and set alternative fill color
+                var hs = polygonTemplate.states.create("hover");
+                hs.properties.fill = chart.colors.getIndex(1).brighten(-0.5);
+
+
+
+            };
+
+        });
+
+    </script>  //script graphs biens en france
+
+    <script>
+
+        am4core.ready(function() {
+            am4core.useTheme(am4themes_animated);
+            let uneCh = 0;
+            let deuxCh = 0;
+            let troisCh = 0;
+            let quatreCh = 0;
+            let cinqCh = 0;
+            let sixCh = 0;
+            let septCh = 0;
+            let huitCh = 0;
+            let neufCh = 0;
+            let dixCh = 0;
+
+            {% for property in properties_notSold %}
+                {% if property.rooms == 1 %}
+                    uneCh++;
+                {% elseif property.rooms == 2 %}
+                    deuxCh++;
+                {% elseif property.rooms == 3 %}
+                    troisCh++;
+                {% elseif property.rooms == 4 %}
+                    quatreCh++;
+                {% elseif property.rooms == 5 %}
+                    cinqCh++;
+                {% elseif property.rooms == 6 %}
+                    sixCh++;
+                {% elseif property.rooms == 7 %}
+                    septCh++;
+                {% elseif property.rooms == 8 %}
+                    huitCh++;
+                {% elseif property.rooms == 9 %}
+                    neufCh++;
+                {% elseif property.rooms == 10 %}
+                    dixCh++;
+                {% endif %}
+            {% endfor %}
+
+            var data = [{
+                "rooms": "Dummy",
+                "disabled": true,
+                "biens": {{ total_properties_notSold }},
+                "color": am4core.color("#dadada"),
+                "opacity": 0.3,
+                "strokeDasharray": "4,4"
+            }, {
+                "rooms": "1 pc",
+                "biens": uneCh
+            }, {
+                "rooms": "2 pcs",
+                "biens": deuxCh
+            }, {
+                "rooms": "3 pcs",
+                "biens": troisCh
+            }, {
+                "rooms": "4 pcs",
+                "biens": quatreCh
+            }, {
+                "rooms": "5 pcs",
+                "biens": cinqCh
+            }, {
+                "rooms": "6 pcs",
+                "biens": sixCh
+            },{
+                "rooms": "7 pcs",
+                "biens": septCh
+            },{
+                "rooms": "8 pcs",
+                "biens": huitCh
+            }, {
+                "rooms": "9 pcs",
+                "biens": neufCh
+            },{
+                "rooms": "10 pcs",
+                "biens": dixCh
+            }];
+
+
+// cointainer to hold both charts
+            var container = am4core.create("chartdiv2", am4core.Container);
+            container.width = am4core.percent(100);
+            container.height = am4core.percent(100);
+            container.layout = "horizontal";
+
+            container.events.on("maxsizechanged", function () {
+                chart1.zIndex = 0;
+                separatorLine.zIndex = 1;
+                dragText.zIndex = 2;
+                chart2.zIndex = 3;
+            })
+
+            var chart1 = container.createChild(am4charts.PieChart);
+            chart1 .fontSize = 11;
+            chart1.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+            chart1.data = data;
+            chart1.radius = am4core.percent(70);
+            chart1.innerRadius = am4core.percent(40);
+            chart1.zIndex = 1;
+
+            var series1 = chart1.series.push(new am4charts.PieSeries());
+            series1.dataFields.value = "biens";
+            series1.dataFields.category = "rooms";
+            series1.colors.step = 2;
+            series1.alignLabels = false;
+            series1.labels.template.bent = true;
+            series1.labels.template.radius = 3;
+            series1.labels.template.padding(0,0,0,0);
+
+            var sliceTemplate1 = series1.slices.template;
+            sliceTemplate1.cornerRadius = 5;
+            sliceTemplate1.draggable = true;
+            sliceTemplate1.inert = true;
+            sliceTemplate1.propertyFields.fill = "color";
+            sliceTemplate1.propertyFields.fillOpacity = "opacity";
+            sliceTemplate1.propertyFields.stroke = "color";
+            sliceTemplate1.propertyFields.strokeDasharray = "strokeDasharray";
+            sliceTemplate1.strokeWidth = 1;
+            sliceTemplate1.strokeOpacity = 1;
+
+            var zIndex = 5;
+
+            sliceTemplate1.events.on("down", function (event) {
+                event.target.toFront();
+                // also put chart to front
+                var series = event.target.dataItem.component;
+                series.chart.zIndex = zIndex++;
+            })
+
+            series1.ticks.template.disabled = true;
+
+            sliceTemplate1.states.getKey("active").properties.shiftRadius = 0;
+
+            sliceTemplate1.events.on("dragstop", function (event) {
+                handleDragStop(event);
+            })
+
+// separator line and text
+            var separatorLine = container.createChild(am4core.Line);
+            separatorLine.x1 = 0;
+            separatorLine.y2 = 300;
+            separatorLine.strokeWidth = 3;
+            separatorLine.stroke = am4core.color("#ffffff");
+            separatorLine.valign = "middle";
+            separatorLine.strokeDasharray = "5,5";
+
+
+            var dragText = container.createChild(am4core.Label);
+            dragText.text = "Glissez les éléments ";
+            dragText.rotation = 90;
+            dragText.valign = "middle";
+            dragText.align = "center";
+            dragText.paddingBottom = 5;
+
+// second chart
+            var chart2 = container.createChild(am4charts.PieChart);
+            chart2.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+            chart2 .fontSize = 11;
+            chart2.radius = am4core.percent(70);
+            chart2.data = data;
+            chart2.innerRadius = am4core.percent(40);
+            chart2.zIndex = 1;
+
+            var series2 = chart2.series.push(new am4charts.PieSeries());
+            series2.dataFields.value = "biens";
+            series2.dataFields.category = "rooms";
+            series2.colors.step = 2;
+
+            series2.alignLabels = false;
+            series2.labels.template.bent = true;
+            series2.labels.template.radius = 3;
+            series2.labels.template.padding(0,0,0,0);
+            series2.labels.template.propertyFields.disabled = "disabled";
+
+            var sliceTemplate2 = series2.slices.template;
+            sliceTemplate2.copyFrom(sliceTemplate1);
+
+            series2.ticks.template.disabled = true;
+
+            function handleDragStop(event) {
+                var targetSlice = event.target;
+                var dataItem1;
+                var dataItem2;
+                var slice1;
+                var slice2;
+
+                if (series1.slices.indexOf(targetSlice) != -1) {
+                    slice1 = targetSlice;
+                    slice2 = series2.dataItems.getIndex(targetSlice.dataItem.index).slice;
+                }
+                else if (series2.slices.indexOf(targetSlice) != -1) {
+                    slice1 = series1.dataItems.getIndex(targetSlice.dataItem.index).slice;
+                    slice2 = targetSlice;
+                }
+
+
+                dataItem1 = slice1.dataItem;
+                dataItem2 = slice2.dataItem;
+
+                var series1Center = am4core.utils.spritePointToSvg({ x: 0, y: 0 }, series1.slicesContainer);
+                var series2Center = am4core.utils.spritePointToSvg({ x: 0, y: 0 }, series2.slicesContainer);
+
+                var series1CenterConverted = am4core.utils.svgPointToSprite(series1Center, series2.slicesContainer);
+                var series2CenterConverted = am4core.utils.svgPointToSprite(series2Center, series1.slicesContainer);
+
+                // tooltipY and tooltipY are in the middle of the slice, so we use them to avoid extra calculations
+                var targetSlicePoint = am4core.utils.spritePointToSvg({ x: targetSlice.tooltipX, y: targetSlice.tooltipY }, targetSlice);
+
+                if (targetSlice == slice1) {
+                    if (targetSlicePoint.x > container.pixelWidth / 2) {
+                        var value = dataItem1.value;
+
+                        dataItem1.hide();
+
+                        var animation = slice1.animate([{ property: "x", to: series2CenterConverted.x }, { property: "y", to: series2CenterConverted.y }], 400);
+                        animation.events.on("animationprogress", function (event) {
+                            slice1.hideTooltip();
+                        })
+
+                        slice2.x = 0;
+                        slice2.y = 0;
+
+                        dataItem2.show();
+                    }
+                    else {
+                        slice1.animate([{ property: "x", to: 0 }, { property: "y", to: 0 }], 400);
+                    }
+                }
+                if (targetSlice == slice2) {
+                    if (targetSlicePoint.x < container.pixelWidth / 2) {
+
+                        var value = dataItem2.value;
+
+                        dataItem2.hide();
+
+                        var animation = slice2.animate([{ property: "x", to: series1CenterConverted.x }, { property: "y", to: series1CenterConverted.y }], 400);
+                        animation.events.on("animationprogress", function (event) {
+                            slice2.hideTooltip();
+                        })
+
+                        slice1.x = 0;
+                        slice1.y = 0;
+                        dataItem1.show();
+                    }
+                    else {
+                        slice2.animate([{ property: "x", to: 0 }, { property: "y", to: 0 }], 400);
+                    }
+                }
+
+                toggleDummySlice(series1);
+                toggleDummySlice(series2);
+
+                series1.hideTooltip();
+                series2.hideTooltip();
+            }
+
+            function toggleDummySlice(series) {
+                var show = true;
+                for (var i = 1; i < series.dataItems.length; i++) {
+                    var dataItem = series.dataItems.getIndex(i);
+                    if (dataItem.slice.visible && !dataItem.slice.isHiding) {
+                        show = false;
+                    }
+                }
+
+                var dummySlice = series.dataItems.getIndex(0);
+                if (show) {
+                    dummySlice.show();
+                }
+                else {
+                    dummySlice.hide();
+                }
+            }
+
+            series2.events.on("datavalidated", function () {
+
+                var dummyDataItem = series2.dataItems.getIndex(0);
+                dummyDataItem.show(0);
+                dummyDataItem.slice.draggable = false;
+                dummyDataItem.slice.tooltipText = undefined;
+
+                for (var i = 1; i < series2.dataItems.length; i++) {
+                    series2.dataItems.getIndex(i).hide(0);
+                }
+            })
+
+            series1.events.on("datavalidated", function () {
+                var dummyDataItem = series1.dataItems.getIndex(0);
+                dummyDataItem.hide(0);
+                dummyDataItem.slice.draggable = false;
+                dummyDataItem.slice.tooltipText = undefined;
+            })
+
+        }); // end am4core.ready()
+    </script> // graph circle rooms
+
+    <!-- Chart code -->
+    <script>
+        am4core.ready(function() {
+
+// Themes begin
+            am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+            var chart = am4core.create("chartdiv3", am4charts.RadarChart);
+            chart.scrollbarX = new am4core.Scrollbar();
+            let uneCh = 0;
+            let deuxCh = 0;
+            let troisCh = 0;
+            let quatreCh = 0;
+            let cinqCh = 0;
+            let sixCh = 0;
+            let septCh = 0;
+            let huitCh = 0;
+            let neufCh = 0;
+            let dixCh = 0;
+
+            {% for property in properties_notSold %}
+            {% if property.bedrooms == 1 %}
+            uneCh++;
+            {% elseif property.bedrooms == 2 %}
+            deuxCh++;
+            {% elseif property.bedrooms == 3 %}
+            troisCh++;
+            {% elseif property.bedrooms == 4 %}
+            quatreCh++;
+            {% elseif property.bedrooms == 5 %}
+            cinqCh++;
+            {% elseif property.bedrooms == 6 %}
+            sixCh++;
+            {% elseif property.bedrooms == 7 %}
+            septCh++;
+            {% elseif property.bedrooms == 8 %}
+            huitCh++;
+            {% elseif property.bedrooms == 9 %}
+            neufCh++;
+            {% endif %}
+            {% endfor %}
+
+            var data = [];
+
+            data.push({category: 1, value:uneCh});
+            data.push({category: 2, value:deuxCh});
+            data.push({category: 3, value:troisCh});
+            data.push({category: 4, value:quatreCh});
+            data.push({category: 5, value:cinqCh});
+            data.push({category: 6, value:sixCh});
+            data.push({category: 7, value:septCh});
+            data.push({category: 8, value:huitCh});
+            data.push({category: 9, value:neufCh});
+
+            chart.data = data;
+            chart.radius = am4core.percent(100);
+            chart.innerRadius = am4core.percent(50);
+
+// Create axes
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "category";
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.minGridDistance = 30;
+            categoryAxis.tooltip.disabled = true;
+            categoryAxis.renderer.minHeight = 110;
+            categoryAxis.renderer.grid.template.disabled = true;
+//categoryAxis.renderer.labels.template.disabled = true;
+            let labelTemplate = categoryAxis.renderer.labels.template;
+            labelTemplate.radius = am4core.percent(-60);
+            labelTemplate.location = 0.5;
+            labelTemplate.relativeRotation = 90;
+
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.renderer.grid.template.disabled = true;
+            valueAxis.renderer.labels.template.disabled = true;
+            valueAxis.tooltip.disabled = true;
+
+// Create series
+            var series = chart.series.push(new am4charts.RadarColumnSeries());
+            series.sequencedInterpolation = true;
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "category";
+            series.columns.template.strokeWidth = 0;
+            series.tooltipText = "{valueY}";
+            series.columns.template.radarColumn.cornerRadius = 10;
+            series.columns.template.radarColumn.innerCornerRadius = 0;
+
+            series.tooltip.pointerOrientation = "vertical";
+
+// on hover, make corner radiuses bigger
+            let hoverState = series.columns.template.radarColumn.states.create("hover");
+            hoverState.properties.cornerRadius = 0;
+            hoverState.properties.fillOpacity = 1;
+
+
+            series.columns.template.adapter.add("fill", function(fill, target) {
+                return chart.colors.getIndex(target.dataItem.index);
+            })
+
+
+            chart.cursor = new am4charts.RadarCursor();
+            chart.cursor.innerRadius = am4core.percent(50);
+            chart.cursor.lineY.disabled = true;
+
+        }); // end am4core.ready()
+    </script> //graphs rooms circle 2
+{% endblock %}

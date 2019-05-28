@@ -20,7 +20,6 @@ class HomeController extends AbstractController
     public function index(PropertyRepository $repository)
     {
         $properties = $repository->findLatest();
-        dump($properties);
         return $this->render('home/index.html.twig', [
             'properties' => $properties,
             'controller_name' => "Maxime"
@@ -28,10 +27,31 @@ class HomeController extends AbstractController
         ]);
     }
 
-    public function graph(PropertyRepository $repository){
+    /**
+     * @Route("/graphs", name="graphs")
+     * @param PropertyRepository $repository
+     * @return Response
+     */
+    public function graphs(PropertyRepository $repository){
 
-        $properties = $repository->findSoldProperties();
+        $properties_sold = $repository->findSoldProperties();
+        $properties_notSold = $repository->findNotSoldProperties();
+        $properties = $repository->findAllQuery();
+        $somme = 0;
+        $total = 0;
 
+        foreach ($properties_sold as $p){
+            $somme = $somme + $p->getPrice();
+            $total = $total+1;
+        }
+
+        return $this->render('home/graph.html.twig', [
+            'total_sold' => $somme,
+            'total_properties_notSold' =>$total,
+            'properties_notSold' => $properties_notSold,
+            'properties_sold' => $properties_sold,
+            'properties' => $properties
+        ]);
 
     }
 

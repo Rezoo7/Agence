@@ -17,18 +17,16 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item ">
                             <a class="nav-link {% if current_menu is defined and  current_menu == 'properties' %} active {% endif %}" href="{{path('property.index') }}"> Acheter</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('graphs') }}" class="nav-link active"> Chiffres de l'Agence</a>
                         </li>
                     </ul>
                 </div>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <a href="" class="nav-link"></a>
-                    </ul>
-                </div>
 
                 {% if app.user == false %}
                 <a href="{{ path('login') }}"> <button class="btn btn-light btn-lg my-2 my-sm-0">Connexion</button></a>
@@ -50,9 +48,12 @@
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
-        <script>
-            $('select').select2();
-        </script>
+
+
+        <script src="https://www.amcharts.com/lib/4/core.js"></script>
+        <script src="https://www.amcharts.com/lib/4/maps.js"></script>
+        <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+        <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 
         {% block javascripts %}{% endblock %}
     </body>
