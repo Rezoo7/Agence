@@ -22,7 +22,7 @@
                             <a class="nav-link {% if current_menu is defined and  current_menu == 'properties' %} active {% endif %}" href="{{path('property.index') }}"> Acheter</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('graphs') }}" class="nav-link active"> Chiffres de l'Agence</a>
+                            <a href="{{ path('graphs') }}" class="nav-link {% if current_menu is defined and  current_menu == 'graphs' %} active {% endif %}"> Chiffres de l'Agence</a>
                         </li>
                     </ul>
                 </div>

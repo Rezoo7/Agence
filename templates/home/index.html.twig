@@ -4,7 +4,7 @@
 
 {% block body %}
     <body>
-        <div class="jumbotron text-center">
+        <div class="jumbotron text-center" style="height: 20%;">
             <h1> Agence Lorem </h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores, aspernatur at, cumque
                 distinctio earum fuga harum impedit inventore molestiae officiis omnis perferendis provident quae quo
@@ -13,10 +13,10 @@
         </div>
 
         <div class="container">
-            <h2>Les Derniers Biens</h2>
+            <h2 style="margin-top: -20px">Les Derniers Biens</h2>
             <div class="row flex">
                 {% for property in properties %}
-                    <div class="col-3">
+                    <div class="col-4 mb-3">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">

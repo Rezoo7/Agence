@@ -50,7 +50,8 @@ class HomeController extends AbstractController
             'total_properties_notSold' =>$total,
             'properties_notSold' => $properties_notSold,
             'properties_sold' => $properties_sold,
-            'properties' => $properties
+            'properties' => $properties,
+            'current_menu' => 'graphs'
         ]);
 
     }

@@ -60,7 +60,7 @@ class PropertyRepository extends ServiceEntityRepository
      */
     public function findLatest(){
         return $this->findVisibleQuery()
-            ->setMaxResults(4)
+            ->setMaxResults(6)
             ->getQuery()
             ->getResult();
     }

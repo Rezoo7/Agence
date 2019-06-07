@@ -12,12 +12,15 @@ use App\Entity\Option;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\PropertyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class AdminPropertyController extends AbstractController
 {
@@ -79,15 +82,20 @@ class AdminPropertyController extends AbstractController
      * @Route("/admin/property/{id}",name="admin.property.edit",methods="GET|POST")
      * @param Property $property
      * @param Request $request
+     * @param CacheManager $cache
+     * @param UploaderHelper $helper
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(Property $property, Request $request){
-
+    public function edit(Property $property, Request $request,CacheManager $cache,UploaderHelper $helper){
 
         $form = $this->createForm(PropertyType::class,$property);
         $form-> handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            if($property->getImageFile() instanceof UploadedFile){
+                 $cache->remove();
+            }
+
             $this->em->flush();
             $this->addFlash('success','Bien Modifié avec succès');
             return $this->redirectToRoute('admin.property.index');

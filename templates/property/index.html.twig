@@ -16,9 +16,7 @@
                     {{ form_row(form.maxPrice) }}
                 </div>
                 <div class="col-md-3">
-                    {{ form_widget(form.options,{
-                        'attr': {'class': 'selectpicker'}}
-                    )}}
+                    {{ form_row(form.options) }}
                 </div>
                 <div class="col">
                    <div class="form-group">
@@ -47,9 +45,5 @@
         </div>
     </div>
     </body>
-{% endblock %}
-
-{% block javascripts %}
-
 {% endblock %}
 
